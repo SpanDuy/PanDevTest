@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     List<Category> findByParentIsNull();
+    List<Category> findByParentIsNullAndChatId(Long chatId);
     List<Category> findByParentId(Long parentId);
     Category findByName(String name);
+    Category findByNameAndChatId(String name, Long id);
 }

@@ -15,6 +15,8 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long chatId;
+
     private String name;
 
     @ManyToOne
@@ -30,13 +32,15 @@ public class Category {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        sb.append("\n {\n");
         buildCategoryTree(sb, this, 0);
+        sb.append(" }\n");
         return sb.toString();
     }
 
     private void buildCategoryTree(StringBuilder response, Category category, int depth) {
         for (int i = 0; i < depth; i++) {
-            response.append("  "); // Добавляем отступы для визуального отображения уровня вложенности
+            response.append("       "); // Добавляем отступы для визуального отображения уровня вложенности
         }
         response.append("- ").append(category.getName()).append("\n");
 
