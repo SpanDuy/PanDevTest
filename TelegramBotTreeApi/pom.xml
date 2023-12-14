@@ -49,6 +49,23 @@
             <artifactId>telegrambots</artifactId>
             <version>6.5.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.telegram</groupId>
+            <artifactId>telegrambots-meta</artifactId>
+            <version>6.5.0</version> <!-- Укажите актуальную версию -->
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>5.2.0</version> <!-- Указать актуальную версию -->
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.2.0</version> <!-- Укажите актуальную версию -->
+        </dependency>
     </dependencies>
 
     <build>
