@@ -1,6 +1,10 @@
 package com.example.telegrambottreeapi.controller;
 
+import com.example.telegrambottreeapi.command.Command;
+import com.example.telegrambottreeapi.command.CommandFactory;
 import com.example.telegrambottreeapi.config.BotConfig;
+import com.example.telegrambottreeapi.sender.Sender;
+import com.example.telegrambottreeapi.sender.SenderFactory;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -16,8 +20,9 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 public class BotController extends TelegramLongPollingBot {
 
     private final BotConfig botConfig;
-    private final CategoryController categoryController;
     private final DocumentController documentController;
+    private final CommandFactory commandFactory;
+    private final SenderFactory senderFactory;
 
     @Override
     public String getBotUsername() {
@@ -36,15 +41,15 @@ public class BotController extends TelegramLongPollingBot {
             String[] commandArgs = message.getText().split(" ");
             long chatId = update.getMessage().getChatId();
 
-            switch (commandArgs[0]) {
-                case "/viewTree" -> sendMessage(chatId, categoryController.handleViewTreeCommand(chatId, commandArgs));
-                case "/addElement" -> sendMessage(chatId, categoryController.handleAddElementCommand(chatId, commandArgs));
-                case "/removeElement" -> sendMessage(chatId, categoryController.handleRemoveElementCommand(chatId, commandArgs));
-                case "/help" -> sendMessage(chatId, categoryController.handleHelpCommand(chatId, commandArgs));
+            Command<?> command = commandFactory.createCommand(message);
+            Object sendingData = command.execute(message);
 
-                case "/download" -> sendDocument(chatId, documentController.handleDownloadCommand(chatId, commandArgs));
-
-                default -> sendMessage(chatId, "Такой команды нет(");
+            if (sendingData.getClass().equals(String.class)) {
+                sendMessage(message.getChatId(), (String) sendingData);
+            } else if (sendingData.getClass().equals(InputFile.class)) {
+                sendDocument(message.getChatId(), (InputFile) sendingData);
+            } else {
+                throw new IllegalStateException("Unexpected value: " + sendingData.getClass());
             }
         }
     }

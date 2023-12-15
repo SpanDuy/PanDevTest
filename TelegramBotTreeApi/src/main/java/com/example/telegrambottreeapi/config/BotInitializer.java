@@ -1,7 +1,6 @@
 package com.example.telegrambottreeapi.config;
 
 import com.example.telegrambottreeapi.controller.BotController;
-import com.example.telegrambottreeapi.controller.CategoryController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
