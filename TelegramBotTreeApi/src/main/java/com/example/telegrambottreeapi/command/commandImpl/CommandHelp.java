@@ -6,6 +6,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
+/*
+        Command Help:
+        Returns string with all existing commands
+ */
 @RequiredArgsConstructor
 public class CommandHelp implements Command<String> {
     private final CategoryService categoryService;
@@ -17,7 +21,8 @@ public class CommandHelp implements Command<String> {
                 "/viewTree - вывести все деревья запросов",
                 "/addElement <название элемента> - создать корневой элемент",
                 "/addElement <родительский элемент> <дочерний элемент> - добавить дочерний элемент родительскому",
-                "/removeElement <название элемента> - удаляет элемент и все его дочерние"
+                "/removeElement <название элемента> - удаляет элемент и все его дочерние",
+                "/download - вывести все деревья запросов ввиде exel файла"
         };
         return String.join("\n", commands);
     }

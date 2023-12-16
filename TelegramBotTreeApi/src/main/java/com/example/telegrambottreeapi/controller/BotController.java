@@ -3,8 +3,6 @@ package com.example.telegrambottreeapi.controller;
 import com.example.telegrambottreeapi.command.Command;
 import com.example.telegrambottreeapi.command.CommandFactory;
 import com.example.telegrambottreeapi.config.BotConfig;
-import com.example.telegrambottreeapi.sender.Sender;
-import com.example.telegrambottreeapi.sender.SenderFactory;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -15,14 +13,16 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+/*
+        Bot Controller:
+        It consumes messages from user and send its response.
+ */
 @Component
 @AllArgsConstructor
 public class BotController extends TelegramLongPollingBot {
 
     private final BotConfig botConfig;
-    private final DocumentController documentController;
     private final CommandFactory commandFactory;
-    private final SenderFactory senderFactory;
 
     @Override
     public String getBotUsername() {
@@ -54,6 +54,9 @@ public class BotController extends TelegramLongPollingBot {
         }
     }
 
+    /*
+            Send string message to user.
+     */
     private void sendMessage(Long chatId, String textToSend){
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(String.valueOf(chatId));
@@ -65,6 +68,9 @@ public class BotController extends TelegramLongPollingBot {
         }
     }
 
+    /*
+            Send document to user.
+     */
     private void sendDocument(Long chatId, InputFile file) {
         SendDocument sendDocument = new SendDocument();
         sendDocument.setChatId(chatId);

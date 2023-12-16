@@ -1,5 +1,8 @@
 package com.example.telegrambottreeapi.exception;
 
+/*
+        Response exception message
+ */
 public class ExceptionResponse extends Throwable{
     private String message;
 

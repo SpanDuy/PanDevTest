@@ -7,6 +7,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
+/*
+        Remove Command:
+        Command to remove some category.
+        All child categories also will be removed.
+ */
 @RequiredArgsConstructor
 public class CommandRemoveElement implements Command<String> {
     private final CategoryService categoryService;

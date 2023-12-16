@@ -9,14 +9,17 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/*
+        Service for working with category
+ */
 @Service
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public String getRootCategories(Long chatId) {
-        return categoryRepository.findByParentIsNullAndChatId(chatId).toString();
+    public List<Category> getRootCategories(Long chatId) {
+        return categoryRepository.findByParentIsNullAndChatId(chatId);
     }
 
     @Override
@@ -30,7 +33,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category saveCategory(Long chatId, String parentCategoryName, String childCategoryName) throws ExceptionResponse {
-        Category parentCategory = categoryRepository.findByName(parentCategoryName);
+        Category parentCategory = categoryRepository.findByNameAndChatId(parentCategoryName, chatId);
         if (parentCategory == null) {
             throw new ExceptionResponse("Родительской категории с таким названием нет");
         }
@@ -48,7 +51,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void deleteCategory(Long chatId, String categoryName) throws ExceptionResponse {
-        Category category = categoryRepository.findByName(categoryName);
+        Category category = categoryRepository.findByNameAndChatId(categoryName, chatId);
         if (category == null) {
             throw new ExceptionResponse("Категории с таким названием нет");
         }

@@ -8,18 +8,16 @@ import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
 /*
-        Command Download:
-        Return exel file with categories
-*/
+        Upload Command:
+        Command to add categories from exel file.
+ */
 @RequiredArgsConstructor
-public class CommandDownload implements Command<InputFile> {
-    /*
-        Service to work with documents.
-    */
+public class CommandUpload implements Command<String> {
     private final DocumentService documentService;
 
     @Override
-    public InputFile execute(Message message) {
-        return documentService.getRootCategoriesExel(message.getChatId());
+    public String execute(Message message) {
+        return "Добавлено успешно";
+        // return documentService.addExelCategories(message.getChatId(), message.getDocument());
     }
 }

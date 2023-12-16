@@ -7,6 +7,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
+/*
+        Command Factory:
+        Returns the command corresponding to the message.
+ */
 @Component
 @RequiredArgsConstructor
 public class CommandFactory {
@@ -15,19 +19,20 @@ public class CommandFactory {
 
     public Command<?> createCommand(Message message) {
         String commandText = message.getText();
+        String[] commandArgs = message.getText().split(" ");
 
-        if ("/viewTree".equals(commandText)) {
+        if ("/viewTree".equals(commandArgs[0])) {
             return new CommandViewTree(categoryService);
-        } else if ("/addElement".equals(commandText)) {
+        } else if ("/addElement".equals(commandArgs[0])) {
             return new CommandAddElement(categoryService);
-        } else if ("/removeElement".equals(commandText)) {
+        } else if ("/removeElement".equals(commandArgs[0])) {
             return new CommandRemoveElement(categoryService);
-        } else if ("/help".equals(commandText)) {
+        } else if ("/help".equals(commandArgs[0])) {
             return new CommandHelp(categoryService);
-        } else if ("/download".equals(commandText)) {
+        } else if ("/download".equals(commandArgs[0])) {
             return new CommandDownload(documentService);
         } else {
-            return null;
+            return new CommandDefault();
         }
     }
 }
